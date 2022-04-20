@@ -29,9 +29,11 @@ function openDatabase() {
 
 const db = openDatabase();
 
+//Function to display the current to do list status.
 function Items({ done: doneHeading, onPressItem }) {
   const [items, setItems] = useState(null);
 
+  //Function consistenly update the screen by every change that accured in the database 
   useEffect(() => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -59,7 +61,7 @@ function Items({ done: doneHeading, onPressItem }) {
             backgroundColor: done ? "#1c9963" : "#fff",
             borderColor: "#000",
             borderWidth: 1,
-            padding: 8,
+            paddTasking: 8,
           }}
         >
           <Text style={{ color: done ? "#fff" : "#000" }}>{value}</Text>
@@ -74,6 +76,7 @@ export default function App() {
   const [forceUpdate, forceUpdateId] = useForceUpdate();
   const [msg, setMsg] = useState("Task & task's date");
 
+  // Create database if not exists 
   useEffect(() => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -82,7 +85,8 @@ export default function App() {
     });
   }, []);
 
-  const add = (text) => {
+
+  const addTask = (text) => {
     // is text empty?
     if (text === null || text === "") {
       return false;
@@ -127,7 +131,7 @@ export default function App() {
               }}
                 
               onSubmitEditing={() => {
-                add(text);
+                addTask(text);
                 setMsg("Task & task's date")
                 setText(null);
               }}
@@ -154,6 +158,7 @@ export default function App() {
             <Items
               done
               key={`forceupdate-done-${forceUpdateId}`}
+              // Dialog with to check if they wnt to delete or edit the task 
               onPressItem={(id) => Alert.alert(
                                     "",
                                     "Do you want to edit or delete?",
@@ -200,7 +205,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     flex: 1,
-    paddingTop: Constants.statusBarHeight,
+    paddTaskingTop: Constants.statusBarHeight,
   },
   heading: {
     fontSize: 20,
@@ -218,12 +223,12 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 48,
     margin: 16,
-    padding: 8,
+    paddTasking: 8,
   },
   listArea: {
     backgroundColor: "#ffc107",
     flex: 1,
-    paddingTop: 16,
+    paddTaskingTop: 16,
   },
   sectionContainer: {
     marginBottom: 16,
